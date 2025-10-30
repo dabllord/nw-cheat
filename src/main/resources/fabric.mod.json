@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "nw-cheat",
+  "version": "${version}",
+  "name": "nw-cheat",
+  "description": "free open-source fabric based cheat-client",
+  "authors": [
+    "mishasigmagucci"
+  ],
+  "contact": {},
+  "license": "AGPL-3.0",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "nw.development.Client"
+    ]
+  },
+  "mixins": [
+    "nw-cheat.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
