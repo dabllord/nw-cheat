@@ -48,6 +48,11 @@ repositories {
         name = "modrinth"
         url = "https://api.modrinth.com/maven"
     }
+
+    maven {
+        name = "meteor-maven"
+        url = "https://maven.meteordev.org/releases"
+    }
 }
 
 dependencies {
@@ -59,6 +64,8 @@ dependencies {
 
     modImplementation "maven.modrinth:sodium:${project.sodium_version}"
     modImplementation "maven.modrinth:lithium:${project.lithium_version}"
+
+    implementation "meteordevelopment:orbit:0.2.4"
 }
 
 processResources {
