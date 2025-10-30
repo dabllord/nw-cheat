@@ -16,6 +16,7 @@
  */
 
 plugins {
+    id 'com.gorylenko.gradle-git-properties' version '2.5.3'
     id 'com.diffplug.spotless' version '8.0.0'
     id 'fabric-loom' version '1.12-SNAPSHOT'
     id 'maven-publish'
@@ -40,6 +41,11 @@ spotless {
     java {
         googleJavaFormat().reflowLongStrings()
     }
+}
+
+gitProperties {
+    keys = ['git.commit.id.abbrev']
+    dateFormat = "yyyy-MM-dd HH:mm:ss"
 }
 
 repositories {
