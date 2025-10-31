@@ -39,13 +39,12 @@ spotless {
     }
 
     java {
-        googleJavaFormat().reflowLongStrings()
+        googleJavaFormat().reflowLongStrings().reorderImports(true)
     }
 }
 
 gitProperties {
     keys = ['git.commit.id.abbrev']
-    dateFormat = "yyyy-MM-dd HH:mm:ss"
 }
 
 repositories {
@@ -72,6 +71,9 @@ dependencies {
     modImplementation "maven.modrinth:lithium:${project.lithium_version}"
 
     implementation "meteordevelopment:orbit:0.2.4"
+
+    compileOnly "org.projectlombok:lombok:${project.lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
 }
 
 processResources {

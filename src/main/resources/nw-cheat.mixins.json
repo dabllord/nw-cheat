@@ -3,9 +3,10 @@
   "minVersion": "0.8",
   "package": "nw.development.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-  ],
+  "mixins": [],
   "client": [
+    "minecraft.client.KeyboardMixin",
+    "minecraft.client.MouseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

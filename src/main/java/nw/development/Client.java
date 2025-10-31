@@ -21,6 +21,7 @@ import java.lang.invoke.MethodHandles;
 import meteordevelopment.orbit.EventBus;
 import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
+import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 public class Client implements ClientModInitializer {
   public static final Logger LOGGER = LoggerFactory.getLogger("nw-cheat");
   public static final IEventBus EVENTS = new EventBus();
+  public static Modules MODULES;
 
   public static final String VERSION = GitPropertiesReader.commit();
 
@@ -37,6 +39,8 @@ public class Client implements ClientModInitializer {
         "nw.development",
         (method, clazz) ->
             (MethodHandles.Lookup) method.invoke(null, clazz, MethodHandles.lookup()));
+
+    MODULES = new Modules();
 
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
   }
