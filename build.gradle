@@ -72,6 +72,8 @@ dependencies {
 
     implementation "meteordevelopment:orbit:0.2.4"
 
+    implementation "org.yaml:snakeyaml:2.5"
+
     compileOnly "org.projectlombok:lombok:${project.lombok_version}"
     annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
 }
