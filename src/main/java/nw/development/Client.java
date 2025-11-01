@@ -23,7 +23,6 @@ import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
 import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
-import nw.development.util.language.Translations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +41,6 @@ public class Client implements ClientModInitializer {
             (MethodHandles.Lookup) method.invoke(null, clazz, MethodHandles.lookup()));
 
     MODULES = new Modules();
-
-    Translations.load();
 
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
   }

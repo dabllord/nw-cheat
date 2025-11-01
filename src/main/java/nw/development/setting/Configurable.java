@@ -17,15 +17,42 @@
 
 package nw.development.setting;
 
-import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
+import nw.development.util.input.Shortcut;
 
-public abstract class Configurable {
-  @Getter private final List<Setting<?>> settings = new ArrayList<>();
+public abstract class Configurable extends Setting<List<Setting<?>>> {
+  public Configurable(String name, List<Setting<?>> defaultValue) {
+    super(name, defaultValue);
+  }
 
-  protected <T> Setting<T> insert(Setting<T> setting) {
-    settings.add(setting);
+  public Configurable(String name) {
+    this(name, List.of());
+  }
+
+  protected Setting<Boolean> booleanSetting(String name, boolean defaultValue) {
+    return insert(new Setting<>(name, defaultValue));
+  }
+
+  protected Setting<Shortcut> shortcutSetting(String name, Shortcut defaultValue) {
+    return insert(new Setting<>(name, defaultValue));
+  }
+
+  private <T> Setting<T> insert(Setting<T> setting) {
+    getValue().add(setting);
     return setting;
+  }
+
+  public void updateChildState(boolean newState) {
+    for (Setting<?> setting : getValue()) {
+      if (setting instanceof ToggleableConfigurable toggleableConfigurable) {
+        toggleableConfigurable.getState().setValue(newState);
+
+        toggleableConfigurable.updateChildState(newState);
+      }
+
+      if (setting instanceof Configurable configurable) {
+        configurable.updateChildState(newState);
+      }
+    }
   }
 }

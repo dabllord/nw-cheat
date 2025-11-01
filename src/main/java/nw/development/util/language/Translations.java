@@ -26,7 +26,7 @@ public class Translations {
   private static final Map<Language, Translation> languages = new HashMap<>();
   public static Translation CURRENT;
 
-  public static void load() {
+  static {
     for (Language lang : Language.values()) {
       languages.put(lang, Translation.load(lang.getLangName()));
     }
