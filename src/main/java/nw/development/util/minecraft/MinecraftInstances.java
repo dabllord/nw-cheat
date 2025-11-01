@@ -16,37 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.util.input;
+package nw.development.util.minecraft;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.client.MinecraftClient;
 
-@AllArgsConstructor
-@Getter
-public class Shortcut {
-  public static final Shortcut NONE = new Shortcut(GLFW.GLFW_KEY_UNKNOWN, false, Action.PRESS);
-
-  private int code;
-  private boolean isMouse;
-  @Setter private Action action;
-
-  public String getName() {
-    if (code == GLFW.GLFW_KEY_UNKNOWN) {
-      return "unknown";
-    } else if (isMouse) {
-      return "mouse" + code;
-    } else {
-      return GLFW.glfwGetKeyName(code, 0);
-    }
-  }
-
-  @AllArgsConstructor
-  public enum Action {
-    HOLD("hold"),
-    PRESS("press");
-
-    @Getter private final String actionName;
-  }
+public interface MinecraftInstances {
+  MinecraftClient mc = MinecraftClient.getInstance();
 }
