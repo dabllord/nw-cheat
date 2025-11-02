@@ -25,6 +25,7 @@ import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
 import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
+import nw.development.util.lang.Languages;
 import nw.development.util.minecraft.MinecraftInstances;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +41,18 @@ public class Client implements ClientModInitializer, MinecraftInstances {
 
   @Override
   public void onInitializeClient() {
+    if (!CLIENT_DIR.exists()) {
+      CLIENT_DIR.mkdir();
+    }
+
     EVENTS.registerLambdaFactory(
         "nw.development",
         (method, clazz) ->
             (MethodHandles.Lookup) method.invoke(null, clazz, MethodHandles.lookup()));
 
     MODULES = new Modules();
+
+    Languages.initialize();
 
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
   }

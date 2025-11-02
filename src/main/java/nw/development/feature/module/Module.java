@@ -24,17 +24,21 @@ import nw.development.events.client.ModuleEnableEvent;
 import nw.development.setting.Setting;
 import nw.development.setting.ToggleableConfigurable;
 import nw.development.util.input.Shortcut;
+import nw.development.util.lang.Languages;
 
-@Getter
-public class Module extends ToggleableConfigurable {
-  private final Category category;
+public abstract class Module extends ToggleableConfigurable {
+  @Getter private final Category category;
+  @Getter private final Setting<Shortcut> shortcut = shortcutSetting("shortcut", Shortcut.NONE);
   private final String descriptionKey;
-  private final Setting<Shortcut> shortcut = shortcutSetting("shortcut", Shortcut.NONE);
 
   public Module(String name, Category category) {
     super(name);
     this.category = category;
     this.descriptionKey = "description." + category.getCategoryName() + "." + name.toLowerCase();
+  }
+
+  public String getDescription() {
+    return Languages.CURRENT.getTranslated(descriptionKey);
   }
 
   @Override
