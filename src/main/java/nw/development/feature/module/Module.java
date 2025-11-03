@@ -31,8 +31,8 @@ public abstract class Module extends ToggleableConfigurable {
   @Getter private final Setting<Shortcut> shortcut = shortcutSetting("shortcut", Shortcut.NONE);
   private final String descriptionKey;
 
-  public Module(String name, Category category) {
-    super(name);
+  public Module(String name, boolean defaultState, Category category) {
+    super(name, defaultState);
     this.category = category;
     this.descriptionKey = "description." + category.getCategoryName() + "." + name.toLowerCase();
   }

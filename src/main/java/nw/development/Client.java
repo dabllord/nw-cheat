@@ -23,6 +23,8 @@ import java.lang.invoke.MethodHandles;
 import meteordevelopment.orbit.EventBus;
 import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
+import nw.development.config.ConfigShutdownHook;
+import nw.development.config.Configs;
 import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
 import nw.development.util.lang.Languages;
@@ -34,6 +36,7 @@ public class Client implements ClientModInitializer, MinecraftInstances {
   public static final Logger LOGGER = LoggerFactory.getLogger("nw-cheat");
   public static final IEventBus EVENTS = new EventBus();
   public static Modules MODULES;
+  public static Configs CONFIGS;
 
   public static final File CLIENT_DIR = new File(mc.runDirectory, "nw-cheat");
 
@@ -42,7 +45,9 @@ public class Client implements ClientModInitializer, MinecraftInstances {
   @Override
   public void onInitializeClient() {
     if (!CLIENT_DIR.exists()) {
-      CLIENT_DIR.mkdir();
+      if (!CLIENT_DIR.mkdir()) {
+        LOGGER.error("failed to create client-dir: {}", CLIENT_DIR.getPath());
+      }
     }
 
     EVENTS.registerLambdaFactory(
@@ -51,8 +56,11 @@ public class Client implements ClientModInitializer, MinecraftInstances {
             (MethodHandles.Lookup) method.invoke(null, clazz, MethodHandles.lookup()));
 
     MODULES = new Modules();
+    CONFIGS = new Configs();
 
     Languages.initialize();
+
+    Runtime.getRuntime().addShutdownHook(new ConfigShutdownHook());
 
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
   }

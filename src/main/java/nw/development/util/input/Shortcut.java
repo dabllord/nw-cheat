@@ -18,20 +18,23 @@
 
 package nw.development.util.input;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.lwjgl.glfw.GLFW;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Shortcut {
   public static final Shortcut NONE = new Shortcut(GLFW.GLFW_KEY_UNKNOWN, false, Action.PRESS);
 
   private int code;
   private boolean isMouse;
-  @Setter private Action action;
+  private Action action;
 
+  @JsonIgnore
   public String getName() {
     if (code == GLFW.GLFW_KEY_UNKNOWN) {
       return "unknown";

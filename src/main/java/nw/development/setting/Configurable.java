@@ -18,16 +18,16 @@
 
 package nw.development.setting;
 
-import java.util.List;
+import java.util.ArrayList;
 import nw.development.util.input.Shortcut;
 
-public abstract class Configurable extends Setting<List<Setting<?>>> {
-  public Configurable(String name, List<Setting<?>> defaultValue) {
+public class Configurable extends Setting<ArrayList<Setting<?>>> {
+  public Configurable(String name, ArrayList<Setting<?>> defaultValue) {
     super(name, defaultValue);
   }
 
   public Configurable(String name) {
-    this(name, List.of());
+    this(name, new ArrayList<>());
   }
 
   protected Setting<Boolean> booleanSetting(String name, boolean defaultValue) {
@@ -36,6 +36,10 @@ public abstract class Configurable extends Setting<List<Setting<?>>> {
 
   protected Setting<Shortcut> shortcutSetting(String name, Shortcut defaultValue) {
     return insert(new Setting<>(name, defaultValue));
+  }
+
+  protected Setting<ArrayList<Setting<?>>> configurableSetting(Configurable configurable) {
+    return insert(configurable);
   }
 
   private <T> Setting<T> insert(Setting<T> setting) {

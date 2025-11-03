@@ -47,7 +47,7 @@ public class Languages {
   public static void initialize() {
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     if (!LANGUAGE_CONFIG_FILE.exists()) {
-      mapper.writeValue(LANGUAGE_CONFIG_FILE, knownLangs.getFirst());
+      mapper.writeValue(LANGUAGE_CONFIG_FILE, "en_us");
     }
 
     String savedLangName = mapper.readValue(LANGUAGE_CONFIG_FILE, String.class);

@@ -18,24 +18,25 @@
 
 package nw.development.setting;
 
-import java.util.List;
+import java.util.ArrayList;
 import lombok.Getter;
 
 public abstract class ToggleableConfigurable extends Configurable {
   @Getter private final Setting<Boolean> state;
 
-  public ToggleableConfigurable(String name, List<Setting<?>> defaultValue, boolean defaultState) {
+  public ToggleableConfigurable(
+      String name, ArrayList<Setting<?>> defaultValue, boolean defaultState) {
     super(name, defaultValue);
 
     state = booleanSetting("state", defaultState);
   }
 
   public ToggleableConfigurable(String name, boolean defaultState) {
-    this(name, List.of(), defaultState);
+    this(name, new ArrayList<>(), defaultState);
   }
 
   public ToggleableConfigurable(String name) {
-    this(name, List.of(), false);
+    this(name, new ArrayList<>(), false);
   }
 
   protected abstract void onEnable();

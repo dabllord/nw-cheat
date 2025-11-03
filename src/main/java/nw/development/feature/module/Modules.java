@@ -37,7 +37,7 @@ public class Modules {
     Client.EVENTS.subscribe(this);
   }
 
-  public <T extends Module> Module get(Class<T> clazz) throws IllegalArgumentException {
+  public <T extends Module> T get(Class<T> clazz) throws IllegalArgumentException {
     for (Module module : modules) {
       if (clazz.isInstance(module)) {
         return clazz.cast(module);
