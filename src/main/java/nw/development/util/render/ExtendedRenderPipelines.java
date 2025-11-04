@@ -59,6 +59,20 @@ public class ExtendedRenderPipelines {
               .withCull(true)
               .build());
 
+  public static final RenderPipeline MSDF =
+      insert(
+          RenderPipeline.builder(MESH_SNIPPET)
+              .withVertexFormat(
+                  VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLES)
+              .withLocation(ResourceUtils.getOf("pipeline/msdf"))
+              .withFragmentShader(ResourceUtils.getOf("core/msdf"))
+              .withVertexShader(ResourceUtils.getOf("core/msdf"))
+              .withBlend(BlendFunction.TRANSLUCENT)
+              .withDepthWrite(false)
+              .withSampler("u_Texture")
+              .withCull(false)
+              .build());
+
   private static RenderPipeline insert(RenderPipeline pipeline) {
     RenderPipelines.register(pipeline);
     return pipeline;

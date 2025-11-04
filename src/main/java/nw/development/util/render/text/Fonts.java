@@ -16,14 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.util.resource;
+package nw.development.util.render.text;
 
 import lombok.experimental.UtilityClass;
-import net.minecraft.util.Identifier;
+import nw.development.util.resource.ResourceUtils;
 
 @UtilityClass
-public class ResourceUtils {
-  public Identifier getOf(String path) {
-    return Identifier.of("nw-cheat", path);
+public class Fonts {
+  public TextRenderer UBUNTU;
+
+  public void initialize() {
+    UBUNTU =
+        new TextRenderer(
+            ResourceUtils.getOf("fonts/ubuntu.png"), ResourceUtils.getOf("fonts/ubuntu.json"));
   }
 }

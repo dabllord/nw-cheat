@@ -6,6 +6,7 @@
   "mixins": [],
   "client": [
     "minecraft.client.KeyboardMixin",
+    "minecraft.client.MinecraftClientMixin",
     "minecraft.client.MouseMixin",
     "minecraft.client.gui.hud.InGameHudMixin"
   ],

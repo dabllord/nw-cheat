@@ -16,14 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.util.resource;
+package nw.development.events.game;
 
-import lombok.experimental.UtilityClass;
-import net.minecraft.util.Identifier;
-
-@UtilityClass
-public class ResourceUtils {
-  public Identifier getOf(String path) {
-    return Identifier.of("nw-cheat", path);
-  }
-}
+public class PostInitializeGameEvent {}

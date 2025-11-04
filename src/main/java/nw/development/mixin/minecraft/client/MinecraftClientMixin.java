@@ -16,14 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.util.resource;
+package nw.development.mixin.minecraft.client;
 
-import lombok.experimental.UtilityClass;
-import net.minecraft.util.Identifier;
+import static nw.development.Client.EVENTS;
 
-@UtilityClass
-public class ResourceUtils {
-  public Identifier getOf(String path) {
-    return Identifier.of("nw-cheat", path);
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
+import nw.development.events.game.PostInitializeGameEvent;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(MinecraftClient.class)
+public class MinecraftClientMixin {
+  @Inject(method = "<init>", at = @At("TAIL"))
+  private void inject$tailInitializeMinecraft(RunArgs args, CallbackInfo ci) {
+    EVENTS.post(new PostInitializeGameEvent());
   }
 }

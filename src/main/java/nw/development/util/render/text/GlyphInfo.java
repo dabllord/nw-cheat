@@ -16,14 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.util.resource;
+package nw.development.util.render.text;
 
-import lombok.experimental.UtilityClass;
-import net.minecraft.util.Identifier;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@UtilityClass
-public class ResourceUtils {
-  public Identifier getOf(String path) {
-    return Identifier.of("nw-cheat", path);
+@Getter
+@AllArgsConstructor
+public class GlyphInfo {
+  private final char unicode;
+  private final float advance;
+  private final boolean hasGeometry;
+  private final float planeLeft, planeBottom, planeRight, planeTop;
+  private final float atlasLeft, atlasBottom, atlasRight, atlasTop;
+
+  public GlyphInfo(char unicode, float advance) {
+    this.unicode = unicode;
+    this.advance = advance;
+    this.hasGeometry = false;
+    this.planeLeft = this.planeBottom = this.planeRight = this.planeTop = 0;
+    this.atlasLeft = this.atlasBottom = this.atlasRight = this.atlasTop = 0;
   }
 }

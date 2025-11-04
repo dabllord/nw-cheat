@@ -20,15 +20,17 @@ package nw.development.util.render;
 
 import com.mojang.blaze3d.systems.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
+import lombok.experimental.UtilityClass;
 import net.minecraft.client.render.ProjectionMatrix2;
 import nw.development.util.minecraft.MinecraftInstances;
 
+@UtilityClass
 public class RenderUtils implements MinecraftInstances {
-  private static final ProjectionMatrix2 matrix =
+  private final ProjectionMatrix2 matrix =
       new ProjectionMatrix2("nw-cheat projection matrix", -10, 100, true);
-  public static boolean rendering3d = true;
+  public boolean rendering3d = true;
 
-  public static void unscaledProjection() {
+  public void unscaledProjection() {
     float w = mc.getWindow().getFramebufferWidth();
     float h = mc.getWindow().getFramebufferHeight();
 
@@ -37,7 +39,7 @@ public class RenderUtils implements MinecraftInstances {
     rendering3d = false;
   }
 
-  public static void scaledProjection() {
+  public void scaledProjection() {
     float w = (float) mc.getWindow().getFramebufferWidth() / mc.getWindow().getScaleFactor();
     float h = (float) mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor();
 
