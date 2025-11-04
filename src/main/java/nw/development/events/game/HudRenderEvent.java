@@ -16,27 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.setting;
+package nw.development.events.game;
 
-import static nw.development.Client.EVENTS;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nw.development.events.client.SettingValueChanged;
+import net.minecraft.client.gui.DrawContext;
 
 @Getter
-public class Setting<T> {
-  private final String name;
-  private final T defaultValue;
-  private T value;
-
-  public Setting(String name, T defaultValue) {
-    this.name = name;
-    this.defaultValue = defaultValue;
-    this.value = defaultValue;
-  }
-
-  public void setValue(T newValue) {
-    this.value = newValue;
-    EVENTS.post(new SettingValueChanged(this));
-  }
+@AllArgsConstructor
+public class HudRenderEvent {
+  DrawContext ctx;
 }

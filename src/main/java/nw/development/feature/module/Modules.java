@@ -18,6 +18,7 @@
 
 package nw.development.feature.module;
 
+import static nw.development.Client.EVENTS;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_REPEAT;
 
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import meteordevelopment.orbit.EventHandler;
-import nw.development.Client;
 import nw.development.events.game.KeyboardKeyEvent;
 import nw.development.events.game.MouseButtonEvent;
 import nw.development.util.input.Shortcut;
@@ -34,7 +34,7 @@ public class Modules {
   @Getter private final List<Module> modules = new ArrayList<>();
 
   public Modules() {
-    Client.EVENTS.subscribe(this);
+    EVENTS.subscribe(this);
   }
 
   public <T extends Module> T get(Class<T> clazz) throws IllegalArgumentException {

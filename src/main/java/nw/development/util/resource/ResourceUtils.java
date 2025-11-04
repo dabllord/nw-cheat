@@ -16,27 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.setting;
+package nw.development.util.resource;
 
-import static nw.development.Client.EVENTS;
+import net.minecraft.util.Identifier;
 
-import lombok.Getter;
-import nw.development.events.client.SettingValueChanged;
-
-@Getter
-public class Setting<T> {
-  private final String name;
-  private final T defaultValue;
-  private T value;
-
-  public Setting(String name, T defaultValue) {
-    this.name = name;
-    this.defaultValue = defaultValue;
-    this.value = defaultValue;
-  }
-
-  public void setValue(T newValue) {
-    this.value = newValue;
-    EVENTS.post(new SettingValueChanged(this));
+public class ResourceUtils {
+  public static Identifier getOf(String path) {
+    return Identifier.of("nw-cheat", path);
   }
 }

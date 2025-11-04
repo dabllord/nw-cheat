@@ -18,12 +18,14 @@
 
 package nw.development.config;
 
+import static nw.development.Client.CLIENT_DIR;
+import static nw.development.Client.MODULES;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import nw.development.Client;
 import nw.development.feature.module.Module;
 import nw.development.setting.Configurable;
 import nw.development.setting.Setting;
@@ -32,8 +34,8 @@ import tools.jackson.databind.ObjectMapper;
 import tools.jackson.dataformat.yaml.YAMLFactory;
 
 public class Configs {
-  private static final File MODULES_CONFIG_FILE = new File(Client.CLIENT_DIR, "modules.yml");
-  private static final File CONFIGS_DIR = new File(Client.CLIENT_DIR, "config");
+  private static final File MODULES_CONFIG_FILE = new File(CLIENT_DIR, "modules.yml");
+  private static final File CONFIGS_DIR = new File(CLIENT_DIR, "config");
   private final ObjectMapper YAML = new ObjectMapper(new YAMLFactory());
 
   public Configs() {
@@ -51,7 +53,7 @@ public class Configs {
   public void saveCurrentTo(File file) {
     Map<String, Map<String, Object>> root = new HashMap<>();
 
-    for (Module module : Client.MODULES.getModules()) {
+    for (Module module : MODULES.getModules()) {
       root.put(module.getName(), serializeSettings(module.getValue()));
     }
 
@@ -74,7 +76,7 @@ public class Configs {
   public void loadFrom(File config) {
     Map<String, Object> root = YAML.readValue(config, new TypeReference<>() {});
 
-    for (Module module : Client.MODULES.getModules()) {
+    for (Module module : MODULES.getModules()) {
       Object moduleNode = root.get(module.getName());
       if (moduleNode instanceof Map<?, ?> moduleMap) {
         applySettings(module.getValue(), (Map<String, Object>) moduleMap);

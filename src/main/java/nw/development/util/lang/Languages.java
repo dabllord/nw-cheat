@@ -18,19 +18,20 @@
 
 package nw.development.util.lang;
 
+import static nw.development.Client.CLIENT_DIR;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import nw.development.Client;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.dataformat.yaml.YAMLFactory;
 
 public class Languages {
   private static final List<String> knownLangs = List.of("en_us");
   private static final Map<String, Language> loadedLangs = new HashMap<>();
-  private static final File LANGUAGE_CONFIG_FILE = new File(Client.CLIENT_DIR, "language.yml");
+  private static final File LANGUAGE_CONFIG_FILE = new File(CLIENT_DIR, "language.yml");
   public static Language CURRENT;
 
   static {

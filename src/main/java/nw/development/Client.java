@@ -18,17 +18,25 @@
 
 package nw.development;
 
+import java.awt.*;
 import java.io.File;
 import java.lang.invoke.MethodHandles;
 import meteordevelopment.orbit.EventBus;
+import meteordevelopment.orbit.EventHandler;
 import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.texture.AbstractTexture;
+import net.minecraft.util.Identifier;
 import nw.development.config.ConfigShutdownHook;
 import nw.development.config.Configs;
+import nw.development.events.game.HudRenderEvent;
 import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
 import nw.development.util.lang.Languages;
 import nw.development.util.minecraft.MinecraftInstances;
+import nw.development.util.render.ExtendedRenderPipelines;
+import nw.development.util.render.MeshBuilder;
+import nw.development.util.render.MeshRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +70,33 @@ public class Client implements ClientModInitializer, MinecraftInstances {
 
     Runtime.getRuntime().addShutdownHook(new ConfigShutdownHook());
 
+    EVENTS.subscribe(this);
+
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
+  }
+
+  @EventHandler
+  private void onHudRender(HudRenderEvent event) {
+    MeshBuilder mesh = new MeshBuilder(ExtendedRenderPipelines.POS_TEX_COLOR);
+
+    mesh.begin();
+    mesh.ensureQuadCapacity();
+
+    mesh.quad(
+        mesh.vec3(0.0, 0.0, 0.0).vec2(0.0, 0.0).color(Color.WHITE).next(),
+        mesh.vec3(0.0, 100.0, 0.0).vec2(0.0, 1.0).color(Color.WHITE).next(),
+        mesh.vec3(100.0, 100.0, 0.0).vec2(1.0, 1.0).color(Color.WHITE).next(),
+        mesh.vec3(100.0, 0.0, 0.0).vec2(1.0, 0.0).color(Color.WHITE).next());
+
+    mesh.end();
+
+    AbstractTexture texture = mc.getTextureManager().getTexture(Identifier.ofVanilla("textures/entity/creeper/creeper.png"));
+
+    MeshRenderer.begin()
+        .attachments(mc.getFramebuffer())
+        .mesh(mesh)
+        .pipeline(ExtendedRenderPipelines.POS_TEX_COLOR)
+        .sampler("u_Texture", texture.getGlTextureView())
+        .end();
   }
 }

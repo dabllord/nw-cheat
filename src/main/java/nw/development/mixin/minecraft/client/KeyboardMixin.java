@@ -18,9 +18,10 @@
 
 package nw.development.mixin.minecraft.client;
 
+import static nw.development.Client.EVENTS;
+
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.input.KeyInput;
-import nw.development.Client;
 import nw.development.events.game.KeyboardKeyEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,6 +32,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class KeyboardMixin {
   @Inject(method = "onKey", at = @At("HEAD"))
   private void inject$onKey(long window, int action, KeyInput input, CallbackInfo ci) {
-    Client.EVENTS.post(new KeyboardKeyEvent(input.key(), input.scancode(), action));
+    EVENTS.post(new KeyboardKeyEvent(input.key(), input.scancode(), action));
   }
 }

@@ -16,22 +16,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.mixin.minecraft.client;
+package nw.development.mixin.minecraft.client.gui.hud;
 
 import static nw.development.Client.EVENTS;
 
-import net.minecraft.client.Mouse;
-import net.minecraft.client.input.MouseInput;
-import nw.development.events.game.MouseButtonEvent;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
+import nw.development.events.game.HudRenderEvent;
+import nw.development.util.render.RenderUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Mouse.class)
-public class MouseMixin {
-  @Inject(method = "onMouseButton", at = @At("HEAD"))
-  private void inject$onMouseButton(long window, MouseInput input, int action, CallbackInfo ci) {
-    EVENTS.post(new MouseButtonEvent(input.button(), action));
+@Mixin(InGameHud.class)
+public class InGameHudMixin {
+  @Inject(method = "render", at = @At("TAIL"))
+  private void inject$render(DrawContext ctx, RenderTickCounter counter, CallbackInfo ci) {
+    RenderUtils.unscaledProjection();
+
+    EVENTS.post(new HudRenderEvent(ctx));
+
+    RenderUtils.scaledProjection();
   }
 }

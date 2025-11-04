@@ -21,8 +21,8 @@ package nw.development.events.game;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class KeyboardKeyEvent {
   int code, scancode, action;
 }

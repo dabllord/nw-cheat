@@ -18,8 +18,9 @@
 
 package nw.development.feature.module;
 
+import static nw.development.Client.EVENTS;
+
 import lombok.Getter;
-import nw.development.Client;
 import nw.development.events.client.ModuleEnableEvent;
 import nw.development.setting.Setting;
 import nw.development.setting.ToggleableConfigurable;
@@ -43,13 +44,13 @@ public abstract class Module extends ToggleableConfigurable {
 
   @Override
   protected void onEnable() {
-    Client.EVENTS.subscribe(this);
-    Client.EVENTS.post(new ModuleEnableEvent(this));
+    EVENTS.subscribe(this);
+    EVENTS.post(new ModuleEnableEvent(this));
   }
 
   @Override
   protected void onDisable() {
-    Client.EVENTS.unsubscribe(this);
-    Client.EVENTS.post(new ModuleEnableEvent(this));
+    EVENTS.unsubscribe(this);
+    EVENTS.post(new ModuleEnableEvent(this));
   }
 }

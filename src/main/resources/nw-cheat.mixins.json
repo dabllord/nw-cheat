@@ -6,7 +6,8 @@
   "mixins": [],
   "client": [
     "minecraft.client.KeyboardMixin",
-    "minecraft.client.MouseMixin"
+    "minecraft.client.MouseMixin",
+    "minecraft.client.gui.hud.InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
