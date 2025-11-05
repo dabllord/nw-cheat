@@ -24,12 +24,12 @@ import nw.development.util.resource.ResourceUtils;
 @UtilityClass
 public class Fonts {
 
-  public FontRenderer UBUNTU;
+  public FontRenderer ROBOTO;
 
   public void initialize() {
-    UBUNTU = new FontRenderer(
-      ResourceUtils.getOf("fonts/ubuntu.png"),
-      ResourceUtils.getOf("fonts/ubuntu.json")
+    ROBOTO = new FontRenderer(
+      ResourceUtils.getOf("fonts/roboto.png"),
+      ResourceUtils.getOf("fonts/roboto.json")
     );
   }
 }
