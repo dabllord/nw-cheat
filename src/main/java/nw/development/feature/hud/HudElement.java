@@ -40,11 +40,13 @@ public abstract class HudElement
   }
 
   public double getPositionX() {
-    return ((double) mc.getWindow().getFramebufferWidth() / 2) * x.getValue();
+    return ((double) mc.getWindow().getFramebufferWidth() / 2) +
+        (mc.getWindow().getFramebufferWidth() * x.getValue());
   }
 
   public double getPositionY() {
-    return ((double) mc.getWindow().getFramebufferHeight() / 2) * y.getValue();
+    return ((double) mc.getWindow().getFramebufferHeight() / 2) +
+        (mc.getWindow().getFramebufferHeight() * y.getValue());
   }
 
   public abstract double calcWidth();

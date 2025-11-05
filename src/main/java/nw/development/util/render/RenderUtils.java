@@ -97,6 +97,6 @@ public class RenderUtils implements MinecraftInstances {
   }
 
   public void drawQuad(float x, float y, float w, float h, Color color) {
-    drawQuad(x, y, w, h, color);
+    drawQuad(x, y, w, h, color, color, color, color);
   }
 }

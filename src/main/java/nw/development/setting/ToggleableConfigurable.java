@@ -34,7 +34,7 @@ public abstract class ToggleableConfigurable extends Configurable {
     boolean defaultState
   ) {
     super(name, defaultValue);
-    state = booleanSetting("state", defaultState);
+    state = booleanSetting("state", defaultState).onChange(this::onToggled);
   }
 
   public ToggleableConfigurable(String name, boolean defaultState) {
@@ -53,15 +53,17 @@ public abstract class ToggleableConfigurable extends Configurable {
     EVENTS.unsubscribe(this);
   }
 
-  public void toggle() {
-    state.setValue(!state.getValue());
+  private void onToggled(Setting<Boolean> newState) {
+    updateChildState(newState.getValue());
 
-    updateChildState(state.getValue());
-
-    if (state.getValue()) {
+    if (newState.getValue()) {
       onEnable();
     } else {
       onDisable();
     }
+  }
+
+  public void toggle() {
+    state.setValue(!state.getValue());
   }
 }

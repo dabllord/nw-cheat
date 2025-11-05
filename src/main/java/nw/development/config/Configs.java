@@ -124,8 +124,8 @@ public class Configs {
             valueToSet = new Color((Integer) yamlValue, true);
           } else if (yamlValue instanceof String str) {
             valueToSet = new Color(
-                (int) Long.parseLong(str.substring(1), 16),
-                str.length() > 7
+              (int) Long.parseLong(str.substring(1), 16),
+              str.length() > 7
             );
           }
         }
@@ -145,8 +145,7 @@ public class Configs {
           serializeSettings(configurable.getValue())
         );
       } else if (setting.getValue() instanceof Color color) {
-        result.put(setting.getName(),
-        String.format("#%08X", color.getRGB()));
+        result.put(setting.getName(), String.format("#%08X", color.getRGB()));
       } else {
         result.put(setting.getName(), setting.getValue());
       }

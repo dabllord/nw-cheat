@@ -37,18 +37,18 @@ public class WatermarkElement extends HudElement {
   @Override
   public double calcWidth() {
     return (
-      /*padding between bg and gradient*/ 12 +
-      /*padding for text*/ 21 +
-      UBUNTU.getWidth("nw-cheat" + mc.getCurrentFps() + "fps", 25f)
+      /*padding between bg and gradient*/ 6 +
+      /*padding for text*/ 11 +
+      UBUNTU.getWidth("nw-cheat" + mc.getCurrentFps() + "fps", 18f)
     );
   }
 
   @Override
   public double calcHeight() {
     return (
-      /*padding between bg and gradient*/ 12 +
+      /*padding between bg and gradient*/ 6 +
       /*padding for text*/ 10 +
-      UBUNTU.getHeight(25f)
+      UBUNTU.getHeight(18f)
     );
   }
 
@@ -72,6 +72,7 @@ public class WatermarkElement extends HudElement {
       new Color(115, 115, 155, 0),
       new Color(115, 115, 155, 0)
     );
-    RenderUtils.drawQuad(x + 6, y + 6, w - 6, h - 6, new Color(0, 0, 0, 178));
+    RenderUtils.drawQuad(x + 3, y + 3, w - 6, h - 6, new Color(0, 0, 0, 178));
+    UBUNTU.drawText("nw-cheat", x+8, y + h / 2 + UBUNTU.getHeight(18f) / 2, 18f, Color.WHITE);
   }
 }

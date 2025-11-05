@@ -66,7 +66,7 @@ public class Configurable extends Setting<ArrayList<Setting<?>>> {
     return insert(configurable);
   }
 
-  private <T extends Setting<?>> T insert(T setting) {
+  protected <T extends Setting<?>> T insert(T setting) {
     getValue().add(setting);
     return setting;
   }

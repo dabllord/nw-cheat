@@ -18,16 +18,23 @@
 
 package nw.development.setting;
 
-import static nw.development.Client.EVENTS;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 import lombok.Getter;
-import nw.development.events.client.SettingValueChanged;
 
-@Getter
 public class Setting<T> {
 
+  private final List<Consumer<Setting<T>>> onChangeListeners =
+    new ArrayList<>();
+
+  @Getter
   private final String name;
+
+  @Getter
   private final T defaultValue;
+
+  @Getter
   private T value;
 
   public Setting(String name, T defaultValue) {
@@ -36,8 +43,16 @@ public class Setting<T> {
     this.value = defaultValue;
   }
 
+  public Setting<T> onChange(Consumer<Setting<T>> onChange) {
+    onChangeListeners.add(onChange);
+    return this;
+  }
+
   public void setValue(T newValue) {
     this.value = newValue;
-    EVENTS.post(new SettingValueChanged(this));
+
+    for (Consumer<Setting<T>> listener : onChangeListeners) {
+      listener.accept(this);
+    }
   }
 }
