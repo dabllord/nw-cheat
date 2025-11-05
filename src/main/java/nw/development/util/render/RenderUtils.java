@@ -18,8 +18,11 @@
 
 package nw.development.util.render;
 
+import static nw.development.util.render.ExtendedRenderPipelines.POS_COLOR;
+
 import com.mojang.blaze3d.systems.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
+import java.awt.*;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.render.ProjectionMatrix2;
 import nw.development.util.minecraft.MinecraftInstances;
@@ -61,5 +64,39 @@ public class RenderUtils implements MinecraftInstances {
     );
 
     rendering3d = true;
+  }
+
+  public void drawQuad(
+    float x,
+    float y,
+    float w,
+    float h,
+    Color rt,
+    Color lt,
+    Color rb,
+    Color lb
+  ) {
+    MeshBuilder mesh = new MeshBuilder(POS_COLOR);
+    mesh.begin();
+    mesh.ensureQuadCapacity();
+
+    mesh.quad(
+      mesh.vec3(x, y, 0).color(rt).next(),
+      mesh.vec3(x, y + h, 0).color(rb).next(),
+      mesh.vec3(x + w, y + h, 0).color(lb).next(),
+      mesh.vec3(x + w, y, 0).color(lt).next()
+    );
+
+    mesh.end();
+
+    MeshRenderer.begin()
+      .mesh(mesh)
+      .pipeline(POS_COLOR)
+      .attachments(mc.getFramebuffer())
+      .end();
+  }
+
+  public void drawQuad(float x, float y, float w, float h, Color color) {
+    drawQuad(x, y, w, h, color);
   }
 }

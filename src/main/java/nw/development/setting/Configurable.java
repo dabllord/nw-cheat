@@ -18,6 +18,7 @@
 
 package nw.development.setting;
 
+import java.awt.*;
 import java.util.ArrayList;
 import nw.development.util.input.Shortcut;
 
@@ -35,6 +36,15 @@ public class Configurable extends Setting<ArrayList<Setting<?>>> {
     return insert(new Setting<>(name, defaultValue));
   }
 
+  protected RangedSetting<Double> doubleSetting(
+    String name,
+    double defaultValue,
+    double min,
+    double max
+  ) {
+    return insert(new RangedSetting<>(name, defaultValue, min, max));
+  }
+
   protected Setting<Shortcut> shortcutSetting(
     String name,
     Shortcut defaultValue
@@ -42,13 +52,21 @@ public class Configurable extends Setting<ArrayList<Setting<?>>> {
     return insert(new Setting<>(name, defaultValue));
   }
 
-  protected Setting<ArrayList<Setting<?>>> configurableSetting(
-    Configurable configurable
+  protected Setting<Color> colorSetting(String name, Color defaultValue) {
+    return insert(new Setting<>(name, defaultValue));
+  }
+
+  protected Configurable configurableSetting(Configurable configurable) {
+    return insert(configurable);
+  }
+
+  protected ToggleableConfigurable toggleableConfigurableSetting(
+    ToggleableConfigurable configurable
   ) {
     return insert(configurable);
   }
 
-  private <T> Setting<T> insert(Setting<T> setting) {
+  private <T extends Setting<?>> T insert(T setting) {
     getValue().add(setting);
     return setting;
   }

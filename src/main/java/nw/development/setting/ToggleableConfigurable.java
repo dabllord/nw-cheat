@@ -18,6 +18,8 @@
 
 package nw.development.setting;
 
+import static nw.development.Client.EVENTS;
+
 import java.util.ArrayList;
 import lombok.Getter;
 
@@ -43,9 +45,13 @@ public abstract class ToggleableConfigurable extends Configurable {
     this(name, new ArrayList<>(), false);
   }
 
-  protected abstract void onEnable();
+  protected void onEnable() {
+    EVENTS.subscribe(this);
+  }
 
-  protected abstract void onDisable();
+  protected void onDisable() {
+    EVENTS.unsubscribe(this);
+  }
 
   public void toggle() {
     state.setValue(!state.getValue());

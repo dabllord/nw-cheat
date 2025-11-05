@@ -28,6 +28,7 @@ import lombok.Getter;
 import meteordevelopment.orbit.EventHandler;
 import nw.development.events.game.KeyboardKeyEvent;
 import nw.development.events.game.MouseButtonEvent;
+import nw.development.feature.module.client.HudModule;
 import nw.development.util.input.Shortcut;
 
 public class Modules {
@@ -37,6 +38,8 @@ public class Modules {
 
   public Modules() {
     EVENTS.subscribe(this);
+
+    modules.add(new HudModule());
   }
 
   public <T extends Module> T get(Class<T> clazz)

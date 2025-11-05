@@ -18,9 +18,6 @@
 
 package nw.development;
 
-import static nw.development.util.render.text.Fonts.*;
-
-import java.awt.*;
 import java.io.File;
 import java.lang.invoke.MethodHandles;
 import meteordevelopment.orbit.EventBus;
@@ -30,7 +27,6 @@ import net.fabricmc.api.ClientModInitializer;
 import nw.development.config.ConfigShutdownHook;
 import nw.development.config.Configs;
 import nw.development.events.game.PostInitializeGameEvent;
-import nw.development.events.render.RenderHudEvent;
 import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
 import nw.development.util.lang.Languages;
@@ -76,10 +72,5 @@ public class Client implements ClientModInitializer, MinecraftInstances {
     Fonts.initialize();
 
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
-  }
-
-  @EventHandler
-  private void onRenderHud(RenderHudEvent event) {
-    UBUNTU.drawText("sss666", 100f, 100f, 20f, Color.RED);
   }
 }

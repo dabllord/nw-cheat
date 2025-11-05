@@ -53,13 +53,13 @@ public abstract class Module extends ToggleableConfigurable {
 
   @Override
   protected void onEnable() {
-    EVENTS.subscribe(this);
+    super.onEnable();
     EVENTS.post(new ModuleEnableEvent(this));
   }
 
   @Override
   protected void onDisable() {
-    EVENTS.unsubscribe(this);
+    super.onDisable();
     EVENTS.post(new ModuleEnableEvent(this));
   }
 }

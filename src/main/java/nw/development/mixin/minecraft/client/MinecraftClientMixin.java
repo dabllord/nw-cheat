@@ -22,6 +22,7 @@ import static nw.development.Client.EVENTS;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
+import nw.development.events.game.GameTickEvent;
 import nw.development.events.game.PostInitializeGameEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,5 +35,10 @@ public class MinecraftClientMixin {
   @Inject(method = "<init>", at = @At("TAIL"))
   private void inject$tailInitializeMinecraft(RunArgs args, CallbackInfo ci) {
     EVENTS.post(new PostInitializeGameEvent());
+  }
+
+  @Inject(method = "tick", at = @At("HEAD"))
+  private void inject$tick(CallbackInfo ci) {
+    EVENTS.post(new GameTickEvent());
   }
 }

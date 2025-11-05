@@ -18,6 +18,9 @@
 
 package nw.development.config;
 
+import static nw.development.Client.*;
+
+import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,8 +32,6 @@ import nw.development.setting.Setting;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.dataformat.yaml.YAMLFactory;
-
-import static nw.development.Client.*;
 
 public class Configs {
 
@@ -118,6 +119,17 @@ public class Configs {
           );
         }
 
+        if (setting.getDefaultValue() instanceof Color) {
+          if (yamlValue instanceof Integer) {
+            valueToSet = new Color((Integer) yamlValue, true);
+          } else if (yamlValue instanceof String str) {
+            valueToSet = new Color(
+                (int) Long.parseLong(str.substring(1), 16),
+                str.length() > 7
+            );
+          }
+        }
+
         ((Setting<Object>) setting).setValue(valueToSet);
       }
     }
@@ -126,12 +138,15 @@ public class Configs {
   private Map<String, Object> serializeSettings(List<Setting<?>> settings) {
     Map<String, Object> result = new LinkedHashMap<>();
 
-    for (Setting<?> setting : settings) {
+    for (Setting setting : settings) {
       if (setting instanceof Configurable configurable) {
         result.put(
           setting.getName(),
           serializeSettings(configurable.getValue())
         );
+      } else if (setting.getValue() instanceof Color color) {
+        result.put(setting.getName(),
+        String.format("#%08X", color.getRGB()));
       } else {
         result.put(setting.getName(), setting.getValue());
       }
