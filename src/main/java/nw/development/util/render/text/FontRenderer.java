@@ -118,6 +118,7 @@ public class FontRenderer implements MinecraftInstances {
     Color color
   ) {
     float scale = size / metrics.getEmSize();
+    float baseline = y + metrics.getAscender() * scale;
     float cursorX = x;
 
     for (char c : text.toCharArray()) {
@@ -133,9 +134,9 @@ public class FontRenderer implements MinecraftInstances {
         mesh.ensureQuadCapacity();
 
         float x0 = cursorX + glyph.getPlaneLeft() * scale;
-        float y0 = y - glyph.getPlaneBottom() * scale;
+        float y0 = baseline - glyph.getPlaneBottom() * scale;
         float x1 = cursorX + glyph.getPlaneRight() * scale;
-        float y1 = y - glyph.getPlaneTop() * scale;
+        float y1 = baseline - glyph.getPlaneTop() * scale;
 
         float u0 = glyph.getAtlasLeft() / atlasWidth;
         float u1 = glyph.getAtlasRight() / atlasWidth;
@@ -170,16 +171,19 @@ public class FontRenderer implements MinecraftInstances {
 
     for (char c : text.toCharArray()) {
       GlyphInfo glyph = glyphs.get(c);
-      if (glyph != null) {
-        width += glyph.getAdvance() * scale;
+      if (glyph == null) {
+        glyph = glyphs.get('?');
+        if (glyph == null) continue;
       }
+      width += glyph.getAdvance() * scale;
     }
 
     return width;
   }
 
   public float getHeight(float size) {
-    return metrics.getLineHeight() * (size / metrics.getEmSize());
+    float scale = size / metrics.getEmSize();
+    return (metrics.getAscender() - metrics.getDescender()) * scale;
   }
 
   private GpuTextureView loadTexture(Identifier id) {
