@@ -23,6 +23,7 @@ import net.minecraft.util.Identifier;
 
 @UtilityClass
 public class ResourceUtils {
+
   public Identifier getOf(String path) {
     return Identifier.of("nw-cheat", path);
   }

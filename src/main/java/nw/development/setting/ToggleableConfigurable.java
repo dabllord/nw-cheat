@@ -22,12 +22,16 @@ import java.util.ArrayList;
 import lombok.Getter;
 
 public abstract class ToggleableConfigurable extends Configurable {
-  @Getter private final Setting<Boolean> state;
+
+  @Getter
+  private final Setting<Boolean> state;
 
   public ToggleableConfigurable(
-      String name, ArrayList<Setting<?>> defaultValue, boolean defaultState) {
+    String name,
+    ArrayList<Setting<?>> defaultValue,
+    boolean defaultState
+  ) {
     super(name, defaultValue);
-
     state = booleanSetting("state", defaultState);
   }
 

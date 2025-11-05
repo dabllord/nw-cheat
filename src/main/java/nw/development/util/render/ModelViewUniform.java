@@ -26,12 +26,13 @@ import net.minecraft.client.gl.DynamicUniformStorage;
 import org.joml.Matrix4f;
 
 public class ModelViewUniform {
+
   public static final int SIZE = new Std140SizeCalculator().putMat4f().get();
 
   private static final Data DATA = new Data();
 
   private static final DynamicUniformStorage<Data> STORAGE =
-      new DynamicUniformStorage<>("nw-cheat - model view ubo", SIZE, 16);
+    new DynamicUniformStorage<>("nw-cheat - model view ubo", SIZE, 16);
 
   public static void flipFrame() {
     STORAGE.clear();
@@ -44,6 +45,7 @@ public class ModelViewUniform {
   }
 
   private static final class Data implements DynamicUniformStorage.Uploadable {
+
     private Matrix4f modelView;
 
     @Override

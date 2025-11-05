@@ -28,14 +28,23 @@ import nw.development.util.input.Shortcut;
 import nw.development.util.lang.Languages;
 
 public abstract class Module extends ToggleableConfigurable {
-  @Getter private final Category category;
-  @Getter private final Setting<Shortcut> shortcut = shortcutSetting("shortcut", Shortcut.NONE);
+
+  @Getter
+  private final Category category;
+
+  @Getter
+  private final Setting<Shortcut> shortcut = shortcutSetting(
+    "shortcut",
+    Shortcut.NONE
+  );
+
   private final String descriptionKey;
 
   public Module(String name, boolean defaultState, Category category) {
     super(name, defaultState);
     this.category = category;
-    this.descriptionKey = "description." + category.getCategoryName() + "." + name.toLowerCase();
+    this.descriptionKey =
+      "description." + category.getCategoryName() + "." + name.toLowerCase();
   }
 
   public String getDescription() {

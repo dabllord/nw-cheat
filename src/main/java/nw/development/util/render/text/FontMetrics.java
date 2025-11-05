@@ -24,6 +24,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class FontMetrics {
+
   final float emSize;
   final float lineHeight;
   final float ascender;

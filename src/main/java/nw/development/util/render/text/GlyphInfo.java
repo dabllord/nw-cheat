@@ -24,6 +24,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GlyphInfo {
+
   private final char unicode;
   private final float advance;
   private final boolean hasGeometry;

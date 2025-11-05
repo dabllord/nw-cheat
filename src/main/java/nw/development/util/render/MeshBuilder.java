@@ -31,6 +31,7 @@ import nw.development.util.minecraft.MinecraftInstances;
 import org.lwjgl.BufferUtils;
 
 public class MeshBuilder implements MinecraftInstances {
+
   private final VertexFormat format;
   private final int primitiveVerticesSize;
   private final int primitiveIndicesCount;
@@ -42,9 +43,12 @@ public class MeshBuilder implements MinecraftInstances {
   private long indicesPointer;
 
   private int vertexIndex;
-  @Getter private int indicesCount;
 
-  @Getter private boolean building;
+  @Getter
+  private int indicesCount;
+
+  @Getter
+  private boolean building;
 
   private double cameraX, cameraZ;
 
@@ -59,13 +63,19 @@ public class MeshBuilder implements MinecraftInstances {
   }
 
   public MeshBuilder(
-      VertexFormat format, VertexFormat.DrawMode drawMode, int vertexCount, int indexCount) {
+    VertexFormat format,
+    VertexFormat.DrawMode drawMode,
+    int vertexCount,
+    int indexCount
+  ) {
     this(format, drawMode);
     allocateBuffers(vertexCount, indexCount);
   }
 
   public void begin() {
-    if (building) throw new IllegalStateException("begin called while already building.");
+    if (building) throw new IllegalStateException(
+      "begin called while already building."
+    );
 
     verticesPointer = verticesPointerStart;
     vertexIndex = 0;
@@ -84,22 +94,22 @@ public class MeshBuilder implements MinecraftInstances {
     building = true;
   }
 
-  public MeshBuilder vec3(double x, double y, double z) {
+  public MeshBuilder vec3(float x, float y, float z) {
     long p = verticesPointer;
 
     memPutFloat(p, (float) (x - cameraX));
-    memPutFloat(p + 4, (float) y);
+    memPutFloat(p + 4, y);
     memPutFloat(p + 8, (float) (z - cameraZ));
 
     verticesPointer += 12;
     return this;
   }
 
-  public MeshBuilder vec2(double x, double y) {
+  public MeshBuilder vec2(float x, float y) {
     long p = verticesPointer;
 
-    memPutFloat(p, (float) x);
-    memPutFloat(p + 4, (float) y);
+    memPutFloat(p, x);
+    memPutFloat(p + 4, y);
 
     verticesPointer += 8;
     return this;
@@ -168,7 +178,9 @@ public class MeshBuilder implements MinecraftInstances {
 
   public void ensureCapacity(int vertexCount, int indexCount) {
     if (indexCount % primitiveIndicesCount != 0) {
-      throw new IllegalArgumentException("unexpected amount of indices written to builder.");
+      throw new IllegalArgumentException(
+        "unexpected amount of indices written to builder."
+      );
     }
 
     if (vertices == null || indices == null) {
@@ -176,11 +188,14 @@ public class MeshBuilder implements MinecraftInstances {
       return;
     }
 
-    if ((vertexIndex + vertexCount) * primitiveVerticesSize >= vertices.capacity()) {
+    if (
+      (vertexIndex + vertexCount) * primitiveVerticesSize >= vertices.capacity()
+    ) {
       int offset = getVerticesOffset();
-      int newSize =
-          Math.max(
-              vertices.capacity() * 2, vertices.capacity() + vertexCount * primitiveVerticesSize);
+      int newSize = Math.max(
+        vertices.capacity() * 2,
+        vertices.capacity() + vertexCount * primitiveVerticesSize
+      );
       ByteBuffer newVertices = BufferUtils.createByteBuffer(newSize);
       memCopy(memAddress0(vertices), memAddress0(newVertices), offset);
 
@@ -190,8 +205,10 @@ public class MeshBuilder implements MinecraftInstances {
     }
 
     if ((indicesCount + indexCount) * Integer.BYTES >= indices.capacity()) {
-      int newSize =
-          Math.max(indices.capacity() * 2, indices.capacity() + indexCount * Integer.BYTES);
+      int newSize = Math.max(
+        indices.capacity() * 2,
+        indices.capacity() + indexCount * Integer.BYTES
+      );
 
       ByteBuffer newIndices = BufferUtils.createByteBuffer(newSize);
       memCopy(memAddress0(indices), memAddress0(newIndices), indicesCount * 4L);
@@ -202,7 +219,9 @@ public class MeshBuilder implements MinecraftInstances {
   }
 
   private void allocateBuffers(int vertexCount, int indexCount) {
-    vertices = BufferUtils.createByteBuffer(primitiveVerticesSize * vertexCount);
+    vertices = BufferUtils.createByteBuffer(
+      primitiveVerticesSize * vertexCount
+    );
     verticesPointer = verticesPointerStart = memAddress0(vertices);
 
     indices = BufferUtils.createByteBuffer(indexCount * Integer.BYTES);
@@ -210,7 +229,9 @@ public class MeshBuilder implements MinecraftInstances {
   }
 
   public void end() {
-    if (!building) throw new IllegalStateException("end called while not building.");
+    if (!building) throw new IllegalStateException(
+      "end called while not building."
+    );
 
     building = false;
   }

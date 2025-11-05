@@ -30,5 +30,6 @@ public enum Category {
   RENDER("render"),
   WORLD("world");
 
-  @Getter private final String categoryName;
+  @Getter
+  private final String categoryName;
 }

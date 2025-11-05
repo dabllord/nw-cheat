@@ -30,8 +30,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mouse.class)
 public class MouseMixin {
+
   @Inject(method = "onMouseButton", at = @At("HEAD"))
-  private void inject$onMouseButton(long window, MouseInput input, int action, CallbackInfo ci) {
+  private void inject$onMouseButton(
+    long window,
+    MouseInput input,
+    int action,
+    CallbackInfo ci
+  ) {
     EVENTS.post(new MouseButtonEvent(input.button(), action));
   }
 }

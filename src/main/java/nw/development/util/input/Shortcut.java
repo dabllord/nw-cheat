@@ -28,7 +28,12 @@ import org.lwjgl.glfw.GLFW;
 @NoArgsConstructor
 @Getter
 public class Shortcut {
-  public static final Shortcut NONE = new Shortcut(GLFW.GLFW_KEY_UNKNOWN, false, Action.PRESS);
+
+  public static final Shortcut NONE = new Shortcut(
+    GLFW.GLFW_KEY_UNKNOWN,
+    false,
+    Action.PRESS
+  );
 
   private int code;
   private boolean isMouse;
@@ -50,6 +55,7 @@ public class Shortcut {
     HOLD("hold"),
     PRESS("press");
 
-    @Getter private final String actionName;
+    @Getter
+    private final String actionName;
   }
 }

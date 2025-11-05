@@ -26,24 +26,39 @@ import nw.development.util.minecraft.MinecraftInstances;
 
 @UtilityClass
 public class RenderUtils implements MinecraftInstances {
-  private final ProjectionMatrix2 matrix =
-      new ProjectionMatrix2("nw-cheat projection matrix", -10, 100, true);
+
+  private final ProjectionMatrix2 matrix = new ProjectionMatrix2(
+    "nw-cheat projection matrix",
+    -10,
+    100,
+    true
+  );
   public boolean rendering3d = true;
 
   public void unscaledProjection() {
     float w = mc.getWindow().getFramebufferWidth();
     float h = mc.getWindow().getFramebufferHeight();
 
-    RenderSystem.setProjectionMatrix(matrix.set(w, h), ProjectionType.ORTHOGRAPHIC);
+    RenderSystem.setProjectionMatrix(
+      matrix.set(w, h),
+      ProjectionType.ORTHOGRAPHIC
+    );
 
     rendering3d = false;
   }
 
   public void scaledProjection() {
-    float w = (float) mc.getWindow().getFramebufferWidth() / mc.getWindow().getScaleFactor();
-    float h = (float) mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor();
+    float w =
+      (float) mc.getWindow().getFramebufferWidth() /
+      mc.getWindow().getScaleFactor();
+    float h =
+      (float) mc.getWindow().getFramebufferHeight() /
+      mc.getWindow().getScaleFactor();
 
-    RenderSystem.setProjectionMatrix(matrix.set(w, h), ProjectionType.PERSPECTIVE);
+    RenderSystem.setProjectionMatrix(
+      matrix.set(w, h),
+      ProjectionType.PERSPECTIVE
+    );
 
     rendering3d = true;
   }

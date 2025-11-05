@@ -30,6 +30,7 @@ import net.fabricmc.api.ClientModInitializer;
 import nw.development.config.ConfigShutdownHook;
 import nw.development.config.Configs;
 import nw.development.events.game.PostInitializeGameEvent;
+import nw.development.events.render.RenderHudEvent;
 import nw.development.feature.module.Modules;
 import nw.development.util.git.GitPropertiesReader;
 import nw.development.util.lang.Languages;
@@ -39,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Client implements ClientModInitializer, MinecraftInstances {
+
   public static final Logger LOGGER = LoggerFactory.getLogger("nw-cheat");
   public static final IEventBus EVENTS = new EventBus();
   public static Modules MODULES;
@@ -56,10 +58,9 @@ public class Client implements ClientModInitializer, MinecraftInstances {
       }
     }
 
-    EVENTS.registerLambdaFactory(
-        "nw.development",
-        (method, clazz) ->
-            (MethodHandles.Lookup) method.invoke(null, clazz, MethodHandles.lookup()));
+    EVENTS.registerLambdaFactory("nw.development", (method, clazz) ->
+      (MethodHandles.Lookup) method.invoke(null, clazz, MethodHandles.lookup())
+    );
 
     Runtime.getRuntime().addShutdownHook(new ConfigShutdownHook());
 
@@ -75,5 +76,10 @@ public class Client implements ClientModInitializer, MinecraftInstances {
     Fonts.initialize();
 
     LOGGER.info("nw-cheat:{} has initialized", VERSION);
+  }
+
+  @EventHandler
+  private void onRenderHud(RenderHudEvent event) {
+    UBUNTU.drawText("sss666", 100f, 100f, 20f, Color.RED);
   }
 }

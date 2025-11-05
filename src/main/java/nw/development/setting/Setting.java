@@ -25,6 +25,7 @@ import nw.development.events.client.SettingValueChanged;
 
 @Getter
 public class Setting<T> {
+
   private final String name;
   private final T defaultValue;
   private T value;

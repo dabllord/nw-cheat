@@ -25,5 +25,6 @@ import nw.development.feature.module.Module;
 @AllArgsConstructor
 @Getter
 public class ModuleDisableEvent {
+
   Module module;
 }

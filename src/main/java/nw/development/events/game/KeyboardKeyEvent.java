@@ -24,5 +24,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class KeyboardKeyEvent {
+
   int code, scancode, action;
 }

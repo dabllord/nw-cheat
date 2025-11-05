@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import nw.development.util.input.Shortcut;
 
 public class Configurable extends Setting<ArrayList<Setting<?>>> {
+
   public Configurable(String name, ArrayList<Setting<?>> defaultValue) {
     super(name, defaultValue);
   }
@@ -34,11 +35,16 @@ public class Configurable extends Setting<ArrayList<Setting<?>>> {
     return insert(new Setting<>(name, defaultValue));
   }
 
-  protected Setting<Shortcut> shortcutSetting(String name, Shortcut defaultValue) {
+  protected Setting<Shortcut> shortcutSetting(
+    String name,
+    Shortcut defaultValue
+  ) {
     return insert(new Setting<>(name, defaultValue));
   }
 
-  protected Setting<ArrayList<Setting<?>>> configurableSetting(Configurable configurable) {
+  protected Setting<ArrayList<Setting<?>>> configurableSetting(
+    Configurable configurable
+  ) {
     return insert(configurable);
   }
 

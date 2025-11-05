@@ -37,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 public class MeshRenderer implements MinecraftInstances {
+
   private static final MeshRenderer INSTANCE = new MeshRenderer();
 
   private static boolean taken;
@@ -54,7 +55,9 @@ public class MeshRenderer implements MinecraftInstances {
   private MeshRenderer() {}
 
   public static MeshRenderer begin() {
-    if (taken) throw new IllegalStateException("Previous instance of MeshRenderer was not ended");
+    if (taken) throw new IllegalStateException(
+      "Previous instance of MeshRenderer was not ended"
+    );
 
     taken = true;
     return INSTANCE;
@@ -126,13 +129,11 @@ public class MeshRenderer implements MinecraftInstances {
       mesh.end();
     }
 
-    int indexCount =
-        mesh != null
-            ? mesh.getIndicesCount()
-            : (indexBuffer != null ? indexBuffer.size() / Integer.BYTES : -1);
+    int indexCount = mesh != null
+      ? mesh.getIndicesCount()
+      : (indexBuffer != null ? indexBuffer.size() / Integer.BYTES : -1);
 
     if (indexCount > 0) {
-
       if (RenderUtils.rendering3d || matrix != null) {
         RenderSystem.getModelViewStack().pushMatrix();
       }
@@ -145,26 +146,36 @@ public class MeshRenderer implements MinecraftInstances {
         applyCameraPos();
       }
 
-      GpuBuffer vertexBuffer = mesh != null ? mesh.getVertexBuffer() : this.vertexBuffer;
-      GpuBuffer indexBuffer = mesh != null ? mesh.getIndexBuffer() : this.indexBuffer;
+      GpuBuffer vertexBuffer = mesh != null
+        ? mesh.getVertexBuffer()
+        : this.vertexBuffer;
+      GpuBuffer indexBuffer = mesh != null
+        ? mesh.getIndexBuffer()
+        : this.indexBuffer;
 
       {
-        GpuBufferSlice modelView = ModelViewUniform.write(RenderSystem.getModelViewStack());
+        GpuBufferSlice modelView = ModelViewUniform.write(
+          RenderSystem.getModelViewStack()
+        );
 
-        RenderPass pass =
-            (depthAttachment != null && pipeline.wantsDepthTexture())
-                ? RenderSystem.getDevice()
-                    .createCommandEncoder()
-                    .createRenderPass(
-                        () -> "nw-cheat renderer",
-                        colorAttachment,
-                        OptionalInt.empty(),
-                        depthAttachment,
-                        OptionalDouble.empty())
-                : RenderSystem.getDevice()
-                    .createCommandEncoder()
-                    .createRenderPass(
-                        () -> "nw-cheat renderer", colorAttachment, OptionalInt.empty());
+        RenderPass pass = (depthAttachment != null &&
+            pipeline.wantsDepthTexture())
+          ? RenderSystem.getDevice()
+              .createCommandEncoder()
+              .createRenderPass(
+                () -> "nw-cheat renderer",
+                colorAttachment,
+                OptionalInt.empty(),
+                depthAttachment,
+                OptionalDouble.empty()
+              )
+          : RenderSystem.getDevice()
+              .createCommandEncoder()
+              .createRenderPass(
+                () -> "nw-cheat renderer",
+                colorAttachment,
+                OptionalInt.empty()
+              );
 
         pass.setPipeline(pipeline);
         pass.setUniform("ModelView", modelView);

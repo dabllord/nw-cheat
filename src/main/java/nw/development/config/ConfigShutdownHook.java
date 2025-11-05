@@ -21,6 +21,7 @@ package nw.development.config;
 import static nw.development.Client.CONFIGS;
 
 public class ConfigShutdownHook extends Thread {
+
   @Override
   public void run() {
     CONFIGS.saveCurrentToDefaultConfig();

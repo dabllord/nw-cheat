@@ -24,8 +24,4 @@ void main() {
     float opacity = clamp(screenPxDistance + 0.5, 0.0, 1.0);
 
     fragColor = vec4(v_Color.rgb, v_Color.a * opacity);
-
-    if (fragColor.a < 0.01) {
-        discard;
-    }
 }

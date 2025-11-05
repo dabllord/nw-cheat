@@ -30,8 +30,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Keyboard.class)
 public class KeyboardMixin {
+
   @Inject(method = "onKey", at = @At("HEAD"))
-  private void inject$onKey(long window, int action, KeyInput input, CallbackInfo ci) {
+  private void inject$onKey(
+    long window,
+    int action,
+    KeyInput input,
+    CallbackInfo ci
+  ) {
     EVENTS.post(new KeyboardKeyEvent(input.key(), input.scancode(), action));
   }
 }

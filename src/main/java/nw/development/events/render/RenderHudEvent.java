@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package nw.development.events.game;
+package nw.development.events.render;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +24,7 @@ import net.minecraft.client.gui.DrawContext;
 
 @Getter
 @AllArgsConstructor
-public class HudRenderEvent {
+public class RenderHudEvent {
+
   DrawContext ctx;
 }

@@ -25,5 +25,6 @@ import nw.development.setting.Setting;
 @AllArgsConstructor
 @Getter
 public class SettingValueChanged {
+
   Setting<?> setting;
 }

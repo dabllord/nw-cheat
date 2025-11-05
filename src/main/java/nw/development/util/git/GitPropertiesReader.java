@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class GitPropertiesReader {
+
   private static final Properties props = new Properties();
 
   public static String commit() {
@@ -29,10 +30,13 @@ public class GitPropertiesReader {
   }
 
   static {
-    try (InputStream in =
-        GitPropertiesReader.class.getClassLoader().getResourceAsStream("git.properties")) {
+    try (
+      InputStream in =
+        GitPropertiesReader.class.getClassLoader().getResourceAsStream(
+          "git.properties"
+        )
+    ) {
       if (in != null) props.load(in);
-    } catch (Exception ignored) {
-    }
+    } catch (Exception ignored) {}
   }
 }

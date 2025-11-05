@@ -24,5 +24,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MouseButtonEvent {
+
   int button, action;
 }

@@ -21,17 +21,20 @@ package nw.development.setting;
 import lombok.Getter;
 
 @Getter
-public class RangedSetting<T extends Number & Comparable<T>> extends Setting<T> {
+public class RangedSetting<T extends Number & Comparable<T>>
+  extends Setting<T> {
+
   private final T min, max;
 
   public RangedSetting(String name, T defaultValue, T min, T max) {
     super(name, defaultValue);
-
     this.min = min;
     this.max = max;
 
     if (defaultValue.compareTo(min) < 0 || defaultValue.compareTo(max) > 0) {
-      throw new IllegalArgumentException("default value out of range: " + defaultValue);
+      throw new IllegalArgumentException(
+        "default value out of range: " + defaultValue
+      );
     }
   }
 

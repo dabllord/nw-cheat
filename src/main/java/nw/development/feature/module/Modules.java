@@ -31,20 +31,25 @@ import nw.development.events.game.MouseButtonEvent;
 import nw.development.util.input.Shortcut;
 
 public class Modules {
-  @Getter private final List<Module> modules = new ArrayList<>();
+
+  @Getter
+  private final List<Module> modules = new ArrayList<>();
 
   public Modules() {
     EVENTS.subscribe(this);
   }
 
-  public <T extends Module> T get(Class<T> clazz) throws IllegalArgumentException {
+  public <T extends Module> T get(Class<T> clazz)
+    throws IllegalArgumentException {
     for (Module module : modules) {
       if (clazz.isInstance(module)) {
         return clazz.cast(module);
       }
     }
 
-    throw new IllegalArgumentException("no module registered for class: " + clazz.getSimpleName());
+    throw new IllegalArgumentException(
+      "no module registered for class: " + clazz.getSimpleName()
+    );
   }
 
   @EventHandler
@@ -81,7 +86,11 @@ public class Modules {
     }
   }
 
-  private static void handleModuleShortcut(Shortcut shortcut, Module module, int event) {
+  private static void handleModuleShortcut(
+    Shortcut shortcut,
+    Module module,
+    int event
+  ) {
     switch (shortcut.getAction()) {
       case HOLD -> module.toggle();
       case PRESS -> {

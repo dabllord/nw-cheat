@@ -23,11 +23,13 @@ import nw.development.util.resource.ResourceUtils;
 
 @UtilityClass
 public class Fonts {
-  public TextRenderer UBUNTU;
+
+  public FontRenderer UBUNTU;
 
   public void initialize() {
-    UBUNTU =
-        new TextRenderer(
-            ResourceUtils.getOf("fonts/ubuntu.png"), ResourceUtils.getOf("fonts/ubuntu.json"));
+    UBUNTU = new FontRenderer(
+      ResourceUtils.getOf("fonts/ubuntu.png"),
+      ResourceUtils.getOf("fonts/ubuntu.json")
+    );
   }
 }

@@ -18,9 +18,6 @@
 
 package nw.development.config;
 
-import static nw.development.Client.CLIENT_DIR;
-import static nw.development.Client.MODULES;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -33,8 +30,14 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.dataformat.yaml.YAMLFactory;
 
+import static nw.development.Client.*;
+
 public class Configs {
-  private static final File MODULES_CONFIG_FILE = new File(CLIENT_DIR, "modules.yml");
+
+  private static final File MODULES_CONFIG_FILE = new File(
+    CLIENT_DIR,
+    "modules.yml"
+  );
   private static final File CONFIGS_DIR = new File(CLIENT_DIR, "config");
   private final ObjectMapper YAML = new ObjectMapper(new YAMLFactory());
 
@@ -66,7 +69,9 @@ public class Configs {
 
   public void loadFrom(String configName) {
     if (!CONFIGS_DIR.exists()) {
-      CONFIGS_DIR.mkdir();
+      if (!CONFIGS_DIR.mkdir()) {
+        LOGGER.error("failed to create configs dir");
+      }
     }
 
     loadFrom(new File(CONFIGS_DIR, configName + ".yml"));
@@ -85,23 +90,35 @@ public class Configs {
   }
 
   @SuppressWarnings("unchecked")
-  private void applySettings(List<Setting<?>> settings, Map<String, Object> yamlData) {
+  private void applySettings(
+    List<Setting<?>> settings,
+    Map<String, Object> yamlData
+  ) {
     for (Setting<?> setting : settings) {
       Object yamlValue = yamlData.get(setting.getName());
       if (yamlValue == null) continue;
 
       if (setting instanceof Configurable configurable) {
         if (yamlValue instanceof Map<?, ?> nestedMap) {
-          applySettings(configurable.getValue(), (Map<String, Object>) nestedMap);
+          applySettings(
+            configurable.getValue(),
+            (Map<String, Object>) nestedMap
+          );
         }
       } else {
         Object valueToSet = yamlValue;
 
-        if (yamlValue instanceof Map && !(setting.getDefaultValue() instanceof Map)) {
-          valueToSet = YAML.convertValue(yamlValue, setting.getDefaultValue().getClass());
+        if (
+          yamlValue instanceof Map &&
+          !(setting.getDefaultValue() instanceof Map)
+        ) {
+          valueToSet = YAML.convertValue(
+            yamlValue,
+            setting.getDefaultValue().getClass()
+          );
         }
 
-        ((Setting) setting).setValue(valueToSet);
+        ((Setting<Object>) setting).setValue(valueToSet);
       }
     }
   }
@@ -111,7 +128,10 @@ public class Configs {
 
     for (Setting<?> setting : settings) {
       if (setting instanceof Configurable configurable) {
-        result.put(setting.getName(), serializeSettings(configurable.getValue()));
+        result.put(
+          setting.getName(),
+          serializeSettings(configurable.getValue())
+        );
       } else {
         result.put(setting.getName(), setting.getValue());
       }

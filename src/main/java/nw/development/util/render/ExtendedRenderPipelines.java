@@ -27,51 +27,59 @@ import net.minecraft.client.render.VertexFormats;
 import nw.development.util.resource.ResourceUtils;
 
 public class ExtendedRenderPipelines {
+
   private static final RenderPipeline.Snippet MESH_SNIPPET =
-      RenderPipeline.builder()
-          .withUniform("ModelView", UniformType.UNIFORM_BUFFER)
-          .withUniform("Projection", UniformType.UNIFORM_BUFFER)
-          .buildSnippet();
+    RenderPipeline.builder()
+      .withUniform("ModelView", UniformType.UNIFORM_BUFFER)
+      .withUniform("Projection", UniformType.UNIFORM_BUFFER)
+      .buildSnippet();
 
-  public static final RenderPipeline POS_COLOR =
-      insert(
-          RenderPipeline.builder(MESH_SNIPPET)
-              .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.TRIANGLES)
-              .withLocation(ResourceUtils.getOf("pipeline/pos_color_culled"))
-              .withFragmentShader(ResourceUtils.getOf("core/pos_color"))
-              .withVertexShader(ResourceUtils.getOf("core/pos_color"))
-              .withBlend(BlendFunction.TRANSLUCENT)
-              .withDepthWrite(false)
-              .withCull(true)
-              .build());
+  public static final RenderPipeline POS_COLOR = insert(
+    RenderPipeline.builder(MESH_SNIPPET)
+      .withVertexFormat(
+        VertexFormats.POSITION_COLOR,
+        VertexFormat.DrawMode.TRIANGLES
+      )
+      .withLocation(ResourceUtils.getOf("pipeline/pos_color_culled"))
+      .withFragmentShader(ResourceUtils.getOf("core/pos_color"))
+      .withVertexShader(ResourceUtils.getOf("core/pos_color"))
+      .withBlend(BlendFunction.TRANSLUCENT)
+      .withDepthWrite(false)
+      .withCull(true)
+      .build()
+  );
 
-  public static final RenderPipeline POS_TEX_COLOR =
-      insert(
-          RenderPipeline.builder(MESH_SNIPPET)
-              .withVertexFormat(
-                  VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLES)
-              .withLocation(ResourceUtils.getOf("pipeline/pos_color_culled"))
-              .withFragmentShader(ResourceUtils.getOf("core/pos_tex_color"))
-              .withVertexShader(ResourceUtils.getOf("core/pos_tex_color"))
-              .withBlend(BlendFunction.TRANSLUCENT)
-              .withDepthWrite(false)
-              .withSampler("u_Texture")
-              .withCull(true)
-              .build());
+  public static final RenderPipeline POS_TEX_COLOR = insert(
+    RenderPipeline.builder(MESH_SNIPPET)
+      .withVertexFormat(
+        VertexFormats.POSITION_TEXTURE_COLOR,
+        VertexFormat.DrawMode.TRIANGLES
+      )
+      .withLocation(ResourceUtils.getOf("pipeline/pos_color_culled"))
+      .withFragmentShader(ResourceUtils.getOf("core/pos_tex_color"))
+      .withVertexShader(ResourceUtils.getOf("core/pos_tex_color"))
+      .withBlend(BlendFunction.TRANSLUCENT)
+      .withDepthWrite(false)
+      .withSampler("u_Texture")
+      .withCull(true)
+      .build()
+  );
 
-  public static final RenderPipeline MSDF =
-      insert(
-          RenderPipeline.builder(MESH_SNIPPET)
-              .withVertexFormat(
-                  VertexFormats.POSITION_TEXTURE_COLOR, VertexFormat.DrawMode.TRIANGLES)
-              .withLocation(ResourceUtils.getOf("pipeline/msdf"))
-              .withFragmentShader(ResourceUtils.getOf("core/msdf"))
-              .withVertexShader(ResourceUtils.getOf("core/msdf"))
-              .withBlend(BlendFunction.TRANSLUCENT)
-              .withDepthWrite(false)
-              .withSampler("u_Texture")
-              .withCull(false)
-              .build());
+  public static final RenderPipeline MSDF = insert(
+    RenderPipeline.builder(MESH_SNIPPET)
+      .withVertexFormat(
+        VertexFormats.POSITION_TEXTURE_COLOR,
+        VertexFormat.DrawMode.TRIANGLES
+      )
+      .withLocation(ResourceUtils.getOf("pipeline/msdf"))
+      .withFragmentShader(ResourceUtils.getOf("core/msdf"))
+      .withVertexShader(ResourceUtils.getOf("core/msdf"))
+      .withBlend(BlendFunction.TRANSLUCENT)
+      .withDepthWrite(false)
+      .withSampler("u_Texture")
+      .withCull(false)
+      .build()
+  );
 
   private static RenderPipeline insert(RenderPipeline pipeline) {
     RenderPipelines.register(pipeline);
